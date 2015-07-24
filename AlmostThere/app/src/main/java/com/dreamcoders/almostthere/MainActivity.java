@@ -1,17 +1,25 @@
 package com.dreamcoders.almostthere;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity implements View.OnClickListener {
+    Button beginCarpooling;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        beginCarpooling = (Button)findViewById(R.id.beginCarpooling);
+        beginCarpooling.setOnClickListener(this); //this will call the onClick method
     }
 
     @Override
@@ -34,5 +42,22 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void beginCarpoolingClick ()
+    {
+        //start new activity
+        startActivity(new Intent("com.dreamcoders.almostthere.CurrentCarpools"));
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.beginCarpooling:
+                beginCarpoolingClick();
+                break;
+        }
     }
 }
