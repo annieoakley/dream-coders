@@ -6,5 +6,13 @@
 
     
     <string name="begin_carpooling">Begin Carpooling</string>
+    <string name="title_activity_intro_email">Intro_email</string>
+    <string name="instruction">To get started, enter your university email. We will send you a verification code that you will need to enter in this app.</string>
+    <string name="goButton">GO</string>
+    <string name="title_activity_intro__code">Intro_Code</string>
+    <string name="enterCodeTitle">Enter your code here</string>
+    <string name="intro">Great! We\'ve sent your code to</string>
+    <string name="emailAddress">emailAddress</string>
+    <string name="codeButton">GO</string>
 
 </resources>

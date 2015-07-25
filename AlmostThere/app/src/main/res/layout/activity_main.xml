@@ -25,5 +25,6 @@
         android:layout_alignBottom="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
-        android:textSize="25dp"/>
+        android:textSize="25dp"
+        android:onClick="onClick"/>
 </RelativeLayout>
