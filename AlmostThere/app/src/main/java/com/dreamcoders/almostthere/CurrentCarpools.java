@@ -3,6 +3,7 @@ package com.dreamcoders.almostthere;
 
 import android.app.Activity;
 import android.os.Bundle;
+
 /**
 * Created by ginadomergue on 7/23/15.
 */

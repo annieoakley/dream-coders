@@ -1,4 +1,4 @@
-package com.dreamcoders.almostthere;
+package com.dreamcoders.almostthere.Intro;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,31 +6,39 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-import com.dreamcoders.almostthere.Intro.Intro_email;
+import com.dreamcoders.almostthere.R;
 
 
-public class MainActivity extends Activity {
-
+public class Intro_Code extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_intro_code);
 
+        Bundle emailData = getIntent().getExtras();
+        if(emailData == null){
+            return;
+        }
+
+        String userEmail = emailData.getString("userEmail");
+        final TextView showEmail = (TextView) findViewById(R.id.showCode);
+        showEmail.setText(userEmail);
     }
 
     public void onClick(View view){
-        Intent i = new Intent(this, Intro_email.class);
+        Intent i = new Intent(this, Intro_userInfo.class);
+
         startActivity(i);
         finish();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_intro__code, menu);
         return true;
     }
 
@@ -48,6 +56,4 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

@@ -1,33 +1,38 @@
-package com.dreamcoders.almostthere;
+package com.dreamcoders.almostthere.Intro;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.EditText;
+
+import com.dreamcoders.almostthere.R;
 
 
-public class Intro_Code extends ActionBarActivity {
+public class Intro_email extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro_code);
+        setContentView(R.layout.activity_intro_email);
+    }
 
-        Bundle emailData = getIntent().getExtras();
-        if(emailData == null){
-            return;
-        }
+    public void onClick(View view){
+        Intent i = new Intent(this, Intro_Code.class);
+        final EditText emailInput = (EditText) findViewById(R.id.email);
+        String userEmail = emailInput.getText().toString();
+        i.putExtra("userEmail", userEmail);
+        startActivity(i);
+        finish();
 
-        String userEmail = emailData.getString("userEmail");
-        final TextView showEmail = (TextView) findViewById(R.id.showCode);
-        showEmail.setText(userEmail);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_intro__code, menu);
+        getMenuInflater().inflate(R.menu.menu_intro_email, menu);
         return true;
     }
 

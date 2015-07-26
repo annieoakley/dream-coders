@@ -14,5 +14,12 @@
     <string name="intro">Great! We\'ve sent your code to</string>
     <string name="emailAddress">emailAddress</string>
     <string name="codeButton">GO</string>
+    <string name="title_activity_intro_user_info">Intro_userInfo</string>
+    <string name="goButtonCode">GO</string>
+    <string name="name">your name:</string>
+    <string name="nameTitle">your name:</string>
+    <string name="userName">Name</string>
+    <string name="pswdTitle">password:</string>
+    <string name="userButton">OK, TAKE ME TO CARPOOOOOL</string>
 
 </resources>
