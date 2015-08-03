@@ -20,11 +20,21 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/begin_carpooling"
-        android:id="@+id/beginCarpooling"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:textSize="25dp"
-        android:onClick="onClick"/>
+        android:text="@string/logIn"
+        android:id="@+id/logInButton"
+        android:textSize="25sp"
+        android:layout_above="@+id/signUpButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signUp"
+        android:id="@+id/signUpButton"
+        android:textSize="25sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="36dp" />
 </RelativeLayout>

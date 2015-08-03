@@ -8,15 +8,4 @@
     tools:context="com.dreamcoders.almostthere.CurrentCarpools">
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="log out"
-        android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="89dp"
-        android:layout_marginStart="89dp"
-        android:layout_marginTop="222dp" />
 </RelativeLayout>

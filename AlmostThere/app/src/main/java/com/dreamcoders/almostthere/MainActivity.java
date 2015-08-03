@@ -3,54 +3,53 @@ package com.dreamcoders.almostthere;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
-import com.dreamcoders.almostthere.Intro.Intro_email;
-import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 
 public class MainActivity extends Activity {
 
+    protected Button mLoginButton;
+    protected Button mSignupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-    }
 
-    public void onClick(View view){
-        Intent i = new Intent(this, Intro_email.class);
-        startActivity(i);
-        finish();
+        mLoginButton = (Button) findViewById(R.id.logInButton);
+        mSignupButton = (Button) findViewById(R.id.signUpButton);
 
-    }
+		/*
+		 * Check for cached user using ParseUser.getCurrentUser()
+        */
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            startActivity(new Intent(this, CurrentCarpools.class));
+            finish();
+        } else {
+            // show the login screen
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+            mLoginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, LogIn.class);
+                    startActivity(intent);
+                }
+            });
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            //show sign up screen
+            mSignupButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, SignUp.class);
+                    startActivity(intent);
+                }
+            });
         }
 
-        return super.onOptionsItemSelected(item);
     }
-
-
+    
 }
