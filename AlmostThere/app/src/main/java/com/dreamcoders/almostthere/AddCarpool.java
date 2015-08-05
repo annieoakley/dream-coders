@@ -49,6 +49,8 @@ public class AddCarpool extends ActionBarActivity {
         mCreateCarpool = (Button) findViewById(R.id.button_SignUp);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        mSeats.setMinValue(1);
+        mSeats.setMaxValue(20);
 
         Button button = (Button) findViewById(R.id.createCarpoolButton);
         button.setOnClickListener(new View.OnClickListener() {
