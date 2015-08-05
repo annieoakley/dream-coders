@@ -17,9 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-	debug{
-		debuggable true
-	}
+        debug {
+            debuggable true
+        }
     }
 }
 
@@ -29,6 +29,10 @@ dependencies {
     compile files('libs/Parse-1.9.4.jar')
 }
 
+dependencies {
+    compile 'com.google.android.gms:play-services:4.2.42'
+    compile 'com.android.support:appcompat-v7:22.+'
+}
 dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
