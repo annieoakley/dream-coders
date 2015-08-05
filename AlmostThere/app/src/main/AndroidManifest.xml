@@ -52,6 +52,10 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" >
         </activity>
+        <activity
+            android:name=".AddCarpool"
+            android:label="@string/title_activity_add_carpool" >
+        </activity>
     </application>
 
 </manifest>

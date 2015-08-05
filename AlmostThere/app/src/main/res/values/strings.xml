@@ -28,5 +28,6 @@
     <string name="ab_logout">logout_menu</string>
     <string name="title_activity_sign_up">SignUp</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_add_carpool"></string>
 
 </resources>

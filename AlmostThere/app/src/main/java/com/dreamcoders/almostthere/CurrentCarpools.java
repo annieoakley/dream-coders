@@ -14,6 +14,8 @@ import com.parse.ParseUser;
 
 public class CurrentCarpools extends ActionBarActivity {
 
+    protected Button mAddCarpool;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,15 @@ public class CurrentCarpools extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(CurrentCarpools.this, MapsActivity.class);
+                startActivity(i);
+            }
+        });
+
+        mAddCarpool = (Button) findViewById(R.id.add_carpool);
+        mAddCarpool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CurrentCarpools.this, AddCarpool.class);
                 startActivity(i);
             }
         });
