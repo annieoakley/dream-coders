@@ -39,13 +39,42 @@ public class SignUp extends Activity {
         mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProgressBar.setVisibility(View.VISIBLE);
                 String username = mUsername.getText().toString();
                 String email = mEmail.getText().toString();
                 String password = mPassword.getText().toString();
 
+                // Validate the sign up data
+                boolean validationError = false;
+                StringBuilder validationErrorMessage = new StringBuilder("Please");
+                if (username.length() == 0) {
+                    validationError = true;
+                    validationErrorMessage.append(" enter a username ");
+                }
+                if (password.length() == 0) {
+                    if (validationError) {
+                        validationErrorMessage.append("and");
+                    }
+                    validationError = true;
+                    validationErrorMessage.append(" enter a password ");
+                }
+
+                if(!email.contains("@google.com") || !email.contains("@gmail.com")){
+                    if(validationError){
+                        validationErrorMessage.append("and");
+                    }
+                    validationError = true;
+                    validationErrorMessage.append(" use google or gmail domain");
+                }
+
+                // If there is a validation error, display the error
+                if (validationError) {
+                    Toast.makeText(SignUp.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
 
 
+                mProgressBar.setVisibility(View.VISIBLE);
 					/*
                      * Sign up using ParseUser
 					 */
@@ -54,16 +83,18 @@ public class SignUp extends Activity {
                 user.setPassword(password);
                 user.setEmail(email);
 
+
+
                 user.signUpInBackground(new SignUpCallback() {
 
                     public void done(ParseException e) {
                         mProgressBar.setVisibility(View.INVISIBLE);
 
                         if (e == null) {
-                                // Hooray! Let them use the app now.
-                                startActivity(new Intent(
-                                        SignUp.this,
-                                        LogIn.class));
+                            // Hooray! Let them use the app now.
+                            startActivity(new Intent(
+                                    SignUp.this,
+                                    LogIn.class));
                         } else {
                             // Sign up didn't succeed. Look at the
                             // ParseException to figure out what went wrong
