@@ -30,6 +30,7 @@ public class AddCarpool extends ActionBarActivity {
     protected EditText mPickUpLocation;
     protected EditText mPickUpTime;
     protected NumberPicker mSeats;
+    protected EditText mNotes;
     protected Button mCreateCarpool;
     protected ProgressBar mProgressBar;
     protected ParseObject newCarpool;
@@ -46,6 +47,7 @@ public class AddCarpool extends ActionBarActivity {
         mPickUpLocation = (EditText) findViewById(R.id.editPickupLocation);
         mPickUpTime = (EditText) findViewById(R.id.editPickUpTime);
         mSeats = (NumberPicker) findViewById(R.id.numberPicker);
+        mNotes = (EditText) findViewById(R.id.editNotes);
         mCreateCarpool = (Button) findViewById(R.id.button_SignUp);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -61,6 +63,7 @@ public class AddCarpool extends ActionBarActivity {
                 String pickUpLocation = mPickUpLocation.getText().toString();
                 String pickUpTime = mPickUpTime.getText().toString();
                 int seats = mSeats.getValue();
+                String notes = mNotes.getText().toString();
 
                 newCarpool = new ParseObject("Carpool");
                 if(mCurrentUser != null) {
@@ -70,7 +73,7 @@ public class AddCarpool extends ActionBarActivity {
                 newCarpool.put("pickUpLocation", pickUpLocation);
                 newCarpool.put("pickUpTime", new Date());
                 newCarpool.put("seatsAvailable", seats);
-                newCarpool.put("notes", "Hello world!");
+                newCarpool.put("notes", notes);
                 newCarpool.saveInBackground(new SaveCallback() {
 
                     public void done(ParseException e) {
