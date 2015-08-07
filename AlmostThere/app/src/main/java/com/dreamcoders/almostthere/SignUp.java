@@ -57,14 +57,7 @@ public class SignUp extends Activity {
                     validationError = true;
                     validationErrorMessage.append(" enter a password ");
                 }
-
-                if(!email.contains("@google.com") || !email.contains("@gmail.com")){
-                    if(validationError){
-                        validationErrorMessage.append("and");
-                    }
-                    validationError = true;
-                    validationErrorMessage.append(" use google or gmail domain");
-                }
+                
 
                 // If there is a validation error, display the error
                 if (validationError) {
