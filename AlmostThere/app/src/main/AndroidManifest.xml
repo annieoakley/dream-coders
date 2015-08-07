@@ -66,6 +66,9 @@
             android:name=".AddCarpool"
             android:label="@string/title_activity_add_carpool" >
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
     </application>
 
 </manifest>

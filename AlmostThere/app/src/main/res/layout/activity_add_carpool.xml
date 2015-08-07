@@ -32,7 +32,7 @@
         android:layout_alignParentStart="true"
         android:text="Destination" />
 
-    <EditText
+    <AutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editDestination"
@@ -40,7 +40,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/createCarpoolButton"
-        android:layout_alignEnd="@+id/createCarpoolButton" />
+        android:layout_alignEnd="@+id/createCarpoolButton"
+        android:ems="10"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +52,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
+    <AutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editPickupLocation"
@@ -59,7 +60,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/editDestination"
-        android:layout_alignEnd="@+id/editDestination" />
+        android:layout_alignEnd="@+id/editDestination"
+        android:ems="10"/>
 
     <TextView
         android:layout_width="wrap_content"

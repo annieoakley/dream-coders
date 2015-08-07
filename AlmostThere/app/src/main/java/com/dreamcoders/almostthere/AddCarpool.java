@@ -1,18 +1,32 @@
 package com.dreamcoders.almostthere;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -20,14 +34,12 @@ import com.parse.SaveCallback;
 
 import java.util.Date;
 
-/**
- * Created by zoetiet on 8/5/15.
- */
-public class AddCarpool extends ActionBarActivity {
+
+public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     protected ParseUser mCurrentUser;
-    protected EditText mDestination;
-    protected EditText mPickUpLocation;
+    protected AutoCompleteTextView mDestination;
+    protected AutoCompleteTextView mPickUpLocation;
     protected EditText mPickUpTime;
     protected NumberPicker mSeats;
     protected EditText mNotes;
@@ -35,16 +47,35 @@ public class AddCarpool extends ActionBarActivity {
     protected ProgressBar mProgressBar;
     protected ParseObject newCarpool;
 
+    protected GoogleApiClient mGoogleApiClient;
+
+    private PlaceAutocompleteAdapter mDestinationAdapter;
+    private PlaceAutocompleteAdapter mPickupAdapter;
+
+    private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
+            new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
+
+        // Construct a GoogleApiClient for the {@link Places#GEO_DATA_API} using AutoManage
+        // functionality, which automatically sets up the API client to handle Activity lifecycle
+        // events. If your activity does not extend FragmentActivity, make sure to call connect()
+        // and disconnect() explicitly.
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, 0 /* clientId */, this)
+                .addApi(Places.GEO_DATA_API)
+                .build();
+
+
         setContentView(R.layout.activity_add_carpool);
 
         mCurrentUser = ParseUser.getCurrentUser();
-        mDestination = (EditText) findViewById(R.id.editDestination);
-        mPickUpLocation = (EditText) findViewById(R.id.editPickupLocation);
+        mDestination = (AutoCompleteTextView) findViewById(R.id.editDestination);
+        mPickUpLocation = (AutoCompleteTextView) findViewById(R.id.editPickupLocation);
         mPickUpTime = (EditText) findViewById(R.id.editPickUpTime);
         mSeats = (NumberPicker) findViewById(R.id.numberPicker);
         mNotes = (EditText) findViewById(R.id.editNotes);
@@ -53,6 +84,20 @@ public class AddCarpool extends ActionBarActivity {
 
         mSeats.setMinValue(1);
         mSeats.setMaxValue(20);
+
+        mDestination.setOnItemClickListener(mDestinationAutocompleteClickListener);
+        mPickUpLocation.setOnItemClickListener(mPickupAutocompleteClickListener);
+
+        //set up the adapter that will retrieve suggestions from the Places Geo Data API.
+        mDestinationAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
+                    mGoogleApiClient, BOUNDS_GREATER_SYDNEY, null);
+        mDestination.setAdapter(mDestinationAdapter);
+
+        mPickupAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
+                mGoogleApiClient, BOUNDS_GREATER_SYDNEY,null);
+        mPickUpLocation.setAdapter(mPickupAdapter);
+
+
 
         Button button = (Button) findViewById(R.id.createCarpoolButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -120,5 +165,94 @@ public class AddCarpool extends ActionBarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    private AdapterView.OnItemClickListener mDestinationAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //retrieve the place ID of the selected item from the adapter. The adapter
+            //stores each Place suggestion in a PlaceAutocomplete object from which we read the place ID.
+            final PlaceAutocompleteAdapter.PlaceAutocomplete item = mDestinationAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+
+            //issue a request to the Places GEo Data API to retrieve a Place object with additional details
+            //about the place.
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+
+            Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
+
+        }
+    };
+
+    private AdapterView.OnItemClickListener mPickupAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //retrieve the place ID of the selected item from the adapter. The adapter
+            //stores each Place suggestion in a PlaceAutocomplete object from which we read the place ID.
+            final PlaceAutocompleteAdapter.PlaceAutocomplete item = mPickupAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+
+            //issue a request to the Places GEo Data API to retrieve a Place object with additional details
+            //about the place.
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+
+            Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
+
+        }
+    };
+
+
+
+    //callback for results from a Place Geo Data API query that shows the first place result in the details view
+    //on screen
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>(){
+
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if(!places.getStatus().isSuccess()){
+                //request is not complete successfully
+                places.release();
+                return;
+            }
+
+            //get the Place object from the buffer
+            final Place place = places.get(0);
+
+            //Format details of the place for display and show it in a Textview
+            mDestination.setText(formatPlaceDetails(getResources(), place.getName()));
+
+            places.release();
+        }
+    };
+
+    private static Spanned formatPlaceDetails(Resources res, CharSequence name){
+        return Html.fromHtml(res.getString(R.string.place_details, name));
+    }
+
+
+    //called when the activity could not connect to Google Play services.
+    //notify user that API is not available.
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this, "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
+                Toast.LENGTH_SHORT).show();
     }
 }
