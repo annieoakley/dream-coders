@@ -191,9 +191,8 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
             //issue a request to the Places GEo Data API to retrieve a Place object with additional details
             //about the place.
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
-            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            placeResult.setResultCallback(mDestinationUpdatePlaceDetailsCallback);
 
-            Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
 
         }
     };
@@ -211,9 +210,8 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
             //issue a request to the Places GEo Data API to retrieve a Place object with additional details
             //about the place.
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
-            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            placeResult.setResultCallback(mPickupUpdatePlaceDetailsCallback);
 
-            Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
 
         }
     };
@@ -222,7 +220,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
     //callback for results from a Place Geo Data API query that shows the first place result in the details view
     //on screen
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>(){
+    private ResultCallback<PlaceBuffer> mDestinationUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>(){
 
         @Override
         public void onResult(PlaceBuffer places) {
@@ -237,6 +235,28 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
             //Format details of the place for display and show it in a Textview
             mDestination.setText(formatPlaceDetails(getResources(), place.getName()));
+
+            places.release();
+        }
+    };
+
+    //callback for results from a Place Geo Data API query that shows the first place result in the details view
+    //on screen
+    private ResultCallback<PlaceBuffer> mPickupUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>(){
+
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if(!places.getStatus().isSuccess()){
+                //request is not complete successfully
+                places.release();
+                return;
+            }
+
+            //get the Place object from the buffer
+            final Place place = places.get(0);
+
+            //Format details of the place for display and show it in a Textview
+            mPickUpLocation.setText(formatPlaceDetails(getResources(), place.getName()));
 
             places.release();
         }
