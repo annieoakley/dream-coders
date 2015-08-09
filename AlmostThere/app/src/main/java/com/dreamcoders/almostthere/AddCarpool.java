@@ -28,6 +28,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -46,6 +47,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
     protected Button mCreateCarpool;
     protected ProgressBar mProgressBar;
     protected ParseObject newCarpool;
+    protected ParseGeoPoint location;
 
     protected GoogleApiClient mGoogleApiClient;
 
@@ -53,7 +55,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
     private PlaceAutocompleteAdapter mPickupAdapter;
 
     private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
-            new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
+            new LatLng(37.209952, -122.472618), new LatLng(37.897678, -121.691871));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +121,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 newCarpool.put("pickUpTime", new Date());
                 newCarpool.put("seatsAvailable", seats);
                 newCarpool.put("notes", notes);
+                newCarpool.put("location", location);
                 newCarpool.saveInBackground(new SaveCallback() {
 
                     public void done(ParseException e) {
@@ -257,7 +260,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
             //Format details of the place for display and show it in a Textview
             mPickUpLocation.setText(formatPlaceDetails(getResources(), place.getName()));
-
+            location = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
             places.release();
         }
     };
