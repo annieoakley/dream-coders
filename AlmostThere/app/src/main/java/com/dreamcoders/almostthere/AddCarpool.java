@@ -47,7 +47,9 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
     protected Button mCreateCarpool;
     protected ProgressBar mProgressBar;
     protected ParseObject newCarpool;
-    protected ParseGeoPoint location;
+    protected ParseGeoPoint pickupGeo;
+    protected ParseGeoPoint destinationGeo;
+    protected ParseObject toDestinationGeo;
 
     protected GoogleApiClient mGoogleApiClient;
 
@@ -121,7 +123,8 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 newCarpool.put("pickUpTime", new Date());
                 newCarpool.put("seatsAvailable", seats);
                 newCarpool.put("notes", notes);
-                newCarpool.put("location", location);
+                newCarpool.put("pickupGeo", pickupGeo);
+                newCarpool.put("toDestinationGeo", toDestinationGeo);
                 newCarpool.saveInBackground(new SaveCallback() {
 
                     public void done(ParseException e) {
@@ -238,6 +241,9 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
             //Format details of the place for display and show it in a Textview
             mDestination.setText(formatPlaceDetails(getResources(), place.getName()));
+            destinationGeo = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            toDestinationGeo = new ParseObject("DestinationGeo");
+            toDestinationGeo.put("destinationGeo", destinationGeo);
 
             places.release();
         }
@@ -260,7 +266,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
             //Format details of the place for display and show it in a Textview
             mPickUpLocation.setText(formatPlaceDetails(getResources(), place.getName()));
-            location = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            pickupGeo = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
             places.release();
         }
     };
