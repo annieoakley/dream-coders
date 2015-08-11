@@ -143,7 +143,7 @@ public class MapsActivity extends FragmentActivity implements
                                 position(new LatLng(destinationGeo.getLatitude(), destinationGeo.getLongitude())).title(place.getString("destination")));
                             }
                         });
-    
+
                 }
             }
         });
