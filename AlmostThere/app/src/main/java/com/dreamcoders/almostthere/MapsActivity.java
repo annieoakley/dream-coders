@@ -17,7 +17,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -129,19 +131,22 @@ public class MapsActivity extends FragmentActivity implements
                 if(e != null){
                     return;
                 }
-                for(ParseObject place : list){
-                    if(place.getParseGeoPoint("location") != null) {
+                for(final ParseObject place : list){
                         mMap.addMarker(new MarkerOptions().
-                                position(new LatLng(place.getParseGeoPoint("location").getLatitude(),
-                                        place.getParseGeoPoint("location").getLongitude())).title(place.getString("pickUpLocation")));
-
-                    }
+                                position(new LatLng(place.getParseGeoPoint("pickupGeo").getLatitude(),
+                                        place.getParseGeoPoint("pickupGeo").getLongitude())).title(place.getString("pickUpLocation")));
+                        place.getParseObject("toDestinationGeo").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject destination, ParseException e) {
+                                ParseGeoPoint destinationGeo = destination.getParseGeoPoint("destinationGeo");
+                                mMap.addMarker(new MarkerOptions().
+                                position(new LatLng(destinationGeo.getLatitude(), destinationGeo.getLongitude())).title(place.getString("destination")));
+                            }
+                        });
+    
                 }
-
             }
         });
-
-
     }
 
 

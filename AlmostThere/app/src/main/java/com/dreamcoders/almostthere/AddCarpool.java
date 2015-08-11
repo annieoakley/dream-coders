@@ -53,7 +53,9 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
     protected Button mCreateCarpool;
     protected ProgressBar mProgressBar;
     protected ParseObject newCarpool;
-    protected ParseGeoPoint location;
+    protected ParseGeoPoint pickupGeo;
+    protected ParseGeoPoint destinationGeo;
+    protected ParseObject toDestinationGeo;
 
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
@@ -151,7 +153,8 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 newCarpool.put("pickUpTime", new Date());
                 newCarpool.put("seatsAvailable", seats);
                 newCarpool.put("notes", notes);
-                newCarpool.put("location", location);
+                newCarpool.put("pickupGeo", pickupGeo);
+                newCarpool.put("toDestinationGeo", toDestinationGeo);
                 newCarpool.saveInBackground(new SaveCallback() {
 
                     public void done(ParseException e) {
@@ -214,11 +217,11 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.logoutButton:
+            case R.id.logoutAddCarpool:
                 ParseUser.logOut();
                 Intent intent = new Intent(AddCarpool.this, LogIn.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -293,6 +296,9 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
             //Format details of the place for display and show it in a Textview
             mDestination.setText(formatPlaceDetails(getResources(), place.getName()));
+            destinationGeo = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            toDestinationGeo = new ParseObject("DestinationGeo");
+            toDestinationGeo.put("destinationGeo", destinationGeo);
 
             places.release();
         }
@@ -315,7 +321,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
             //Format details of the place for display and show it in a Textview
             mPickUpLocation.setText(formatPlaceDetails(getResources(), place.getName()));
-            location = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            pickupGeo = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
             places.release();
         }
     };
@@ -334,6 +340,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 Toast.LENGTH_SHORT).show();
     }
 
+
 //    @Override
 //    public void onClick(View view) {
 //        if(view == fromDateEtxt) {
@@ -342,4 +349,5 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 //            toDatePickerDialog.show();
 //        }
 //    }
+
 }
