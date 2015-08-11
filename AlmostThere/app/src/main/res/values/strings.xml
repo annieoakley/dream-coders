@@ -18,7 +18,7 @@
     <string name="goButtonCode">GO</string>
     <string name="name">your name:</string>
     <string name="nameTitle">your name:</string>
-    <string name="userName">Username</string>
+    <string name="userName">username</string>
     <string name="pswdTitle">password</string>
     <string name="userButton">OK, TAKE ME TO CARPOOOOOL</string>
     <string name="logIn">LOG IN</string>
@@ -28,7 +28,7 @@
     <string name="ab_logout">logout_menu</string>
     <string name="title_activity_sign_up">Sign Up</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_add_carpool"></string>
+    <string name="title_activity_add_carpool">Create New Carpool</string>
 
     <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;</string>
 
