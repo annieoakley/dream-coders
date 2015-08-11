@@ -56,8 +56,8 @@ public class CurrentCarpools extends ActionBarActivity {
             case R.id.logoutButton:
                 ParseUser.logOut();
                 Intent intent = new Intent(CurrentCarpools.this, LogIn.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

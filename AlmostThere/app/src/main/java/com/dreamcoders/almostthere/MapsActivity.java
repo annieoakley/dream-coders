@@ -134,14 +134,10 @@ public class MapsActivity extends FragmentActivity implements
                         mMap.addMarker(new MarkerOptions().
                                 position(new LatLng(place.getParseGeoPoint("location").getLatitude(),
                                         place.getParseGeoPoint("location").getLongitude())).title(place.getString("pickUpLocation")));
-
                     }
                 }
-
             }
         });
-
-
     }
 
 

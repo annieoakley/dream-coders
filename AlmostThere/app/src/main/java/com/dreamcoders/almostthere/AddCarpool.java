@@ -159,11 +159,11 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.logoutButton:
+            case R.id.logoutAddCarpool:
                 ParseUser.logOut();
                 Intent intent = new Intent(AddCarpool.this, LogIn.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -278,4 +278,5 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
         Toast.makeText(this, "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
                 Toast.LENGTH_SHORT).show();
     }
+
 }
