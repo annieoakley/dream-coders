@@ -164,7 +164,7 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
                                             Toast.makeText(JoinCarpool.this, "Carpool joined!", Toast.LENGTH_LONG).show();
                                             startActivity(new Intent(
                                                     JoinCarpool.this,
-                                                    CurrentCarpools.class));
+                                                    MyCarpools.class));
                                         }
                                     }
                                 });

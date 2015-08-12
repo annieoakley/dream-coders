@@ -43,9 +43,12 @@
             android:label="@string/title_activity_log_in"
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <activity android:name=".CurrentCarpools"
+            android:label="@string/title_activity_current_carpools">
+        </activity>
         <activity
-            android:name=".CurrentCarpools"
-            android:label="@string/title_activity_current_carpools" >
+            android:name=".MyCarpools"
+            android:label="@string/title_activity_my_carpools" >
         </activity>
         <activity
             android:name=".SignUp"
