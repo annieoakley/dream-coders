@@ -2,7 +2,6 @@ package com.dreamcoders.almostthere;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -21,45 +20,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Adapter that handles Autocomplete requests from the Places Geo Data API.
- * Results are encoded as {@link com.example.google.playservices.placecomplete.PlaceAutocompleteAdapter.PlaceAutocomplete}
- * objects
- * that contain both the Place ID and the text description from the autocomplete query.
- * <p>
- * Note that this adapter requires a valid {@link com.google.android.gms.common.api.GoogleApiClient}.
- * The API client must be maintained in the encapsulating Activity, including all lifecycle and
- * connection states. The API client must be connected with the {@link Places#GEO_DATA_API} API.
- */
+
 public class PlaceAutocompleteAdapter
         extends ArrayAdapter<PlaceAutocompleteAdapter.PlaceAutocomplete> implements Filterable {
 
     private static final String TAG = "PlaceAutocompleteAdapter";
-    /**
-     * Current results returned by this adapter.
-     */
+
     private ArrayList<PlaceAutocomplete> mResultList;
 
-    /**
-     * Handles autocomplete requests.
-     */
+
     private GoogleApiClient mGoogleApiClient;
 
-    /**
-     * The bounds used for Places Geo Data autocomplete API requests.
-     */
+
     private LatLngBounds mBounds;
 
-    /**
-     * The autocomplete filter used to restrict queries to a specific set of place types.
-     */
     private AutocompleteFilter mPlaceFilter;
 
-    /**
-     * Initializes with a resource for text rows and autocomplete query bounds.
-     *
-     * @see android.widget.ArrayAdapter#ArrayAdapter(android.content.Context, int)
-     */
+
     public PlaceAutocompleteAdapter(Context context, int resource, GoogleApiClient googleApiClient,
                                     LatLngBounds bounds, AutocompleteFilter filter) {
         super(context, resource);
@@ -68,32 +45,23 @@ public class PlaceAutocompleteAdapter
         mPlaceFilter = filter;
     }
 
-    /**
-     * Sets the bounds for all subsequent queries.
-     */
     public void setBounds(LatLngBounds bounds) {
         mBounds = bounds;
     }
 
-    /**
-     * Returns the number of results received in the last autocomplete query.
-     */
+
     @Override
     public int getCount() {
         return mResultList.size();
     }
 
-    /**
-     * Returns an item from the last autocomplete query.
-     */
+
     @Override
     public PlaceAutocomplete getItem(int position) {
         return mResultList.get(position);
     }
 
-    /**
-     * Returns the filter for the current set of autocomplete results.
-     */
+
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
@@ -127,20 +95,6 @@ public class PlaceAutocompleteAdapter
         return filter;
     }
 
-    /**
-     * Submits an autocomplete query to the Places Geo Data Autocomplete API.
-     * Results are returned as {@link com.example.google.playservices.placecomplete.PlaceAutocompleteAdapter.PlaceAutocomplete}
-     * objects to store the Place ID and description that the API returns.
-     * Returns an empty list if no results were found.
-     * Returns null if the API client is not available or the query did not complete
-     * successfully.
-     * This method MUST be called off the main UI thread, as it will block until data is returned
-     * from the API, which may include a network request.
-     *
-     * @param constraint Autocomplete query string
-     * @return Results from the autocomplete API or null if the query was not successful.
-     * @see Places#GEO_DATA_API#getAutocomplete(CharSequence)
-     */
     private ArrayList<PlaceAutocomplete> getAutocomplete(CharSequence constraint) {
         if (mGoogleApiClient.isConnected()) {
 
@@ -185,9 +139,7 @@ public class PlaceAutocompleteAdapter
         return null;
     }
 
-    /**
-     * Holder for Places Geo Data Autocomplete API results.
-     */
+
     class PlaceAutocomplete {
 
         public CharSequence placeId;

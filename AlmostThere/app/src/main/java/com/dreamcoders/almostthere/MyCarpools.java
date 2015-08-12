@@ -59,7 +59,6 @@ public class MyCarpools extends AppCompatActivity {
                     }
                 };
 
-
         currentCarpoolAdapter = new ParseQueryAdapter<ParseObject>(this, factory){
             @Override
             public View getItemView(ParseObject object, View view, ViewGroup parent) {
