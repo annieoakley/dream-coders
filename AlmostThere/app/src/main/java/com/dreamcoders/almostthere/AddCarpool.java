@@ -119,7 +119,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
         mSeats.setMaxValue(20);
 
         dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        timeFormatter = new SimpleDateFormat("HH:mm", Locale.US);
+        timeFormatter = new SimpleDateFormat("hh:mm a", Locale.US);
 
         mDestination.setOnItemClickListener(mDestinationAutocompleteClickListener);
         mPickUpLocation.setOnItemClickListener(mPickupAutocompleteClickListener);
@@ -142,8 +142,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 mProgressBar.setVisibility(View.VISIBLE);
                 String destination = mDestination.getText().toString();
                 String pickUpLocation = mPickUpLocation.getText().toString();
-//                String MDY = mPickUpDay.getText().toString();
-                Date pickUpDate = new Date(year, month, day, hour, minute);
+                Date pickUpDate = new Date(year - 1900, month, day, hour, minute);
                 int seats = mSeats.getValue();
                 String notes = mNotes.getText().toString();
 
@@ -196,13 +195,13 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hr, int min) {
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(Calendar.HOUR, hr);
+                newDate.set(Calendar.HOUR_OF_DAY, hr);
                 newDate.set(Calendar.MINUTE, min);
                 mPickUpTime.setText(timeFormatter.format(newDate.getTime()));
                 hour = hr;
                 minute = min;
             }
-        },newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE), true);
+        },newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE), false);
         mPickUpDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
