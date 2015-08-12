@@ -48,7 +48,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/username_SignUp"
             android:ems="10"
-            android:hint="email"
+            android:hint="E-mail"
             android:inputType="textEmailAddress" />
 
 
@@ -76,7 +76,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBar_SignUp"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

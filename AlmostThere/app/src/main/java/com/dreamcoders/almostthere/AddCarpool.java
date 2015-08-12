@@ -16,9 +16,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -37,9 +39,9 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
 
 public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -48,6 +50,13 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
     protected AutoCompleteTextView mPickUpLocation;
     protected EditText mPickUpDay;
     protected EditText mPickUpTime;
+
+    protected int month;
+    protected int day;
+    protected int year;
+    protected int hour;
+    protected int minute;
+
     protected NumberPicker mSeats;
     protected EditText mNotes;
     protected Button mCreateCarpool;
@@ -59,8 +68,8 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
-
     private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat timeFormatter;
 
     protected GoogleApiClient mGoogleApiClient;
 
@@ -92,12 +101,12 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
         mDestination = (AutoCompleteTextView) findViewById(R.id.editDestination);
         mPickUpLocation = (AutoCompleteTextView) findViewById(R.id.editPickupLocation);
 
-        //Date Picker
+        //Date Picker		
         mPickUpDay = (EditText) findViewById(R.id.datePicker);
         mPickUpDay.setInputType(InputType.TYPE_NULL);
         mPickUpDay.requestFocus();
 
-        //Time Picker
+        //Time Picker		
         mPickUpTime = (EditText) findViewById(R.id.timePicker);
         mPickUpTime.setInputType(InputType.TYPE_NULL);
 
@@ -109,24 +118,22 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
         mSeats.setMinValue(1);
         mSeats.setMaxValue(20);
 
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        timeFormatter = new SimpleDateFormat("HH:mm", Locale.US);
 
         mDestination.setOnItemClickListener(mDestinationAutocompleteClickListener);
         mPickUpLocation.setOnItemClickListener(mPickupAutocompleteClickListener);
 
-
-
         //set up the adapter that will retrieve suggestions from the Places Geo Data API.
         mDestinationAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
-                    mGoogleApiClient, BOUNDS_GREATER_SYDNEY, null);
+                mGoogleApiClient, BOUNDS_GREATER_SYDNEY, null);
         mDestination.setAdapter(mDestinationAdapter);
 
         mPickupAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
                 mGoogleApiClient, BOUNDS_GREATER_SYDNEY,null);
         mPickUpLocation.setAdapter(mPickupAdapter);
 
-
-
+        setDateTimeField();
 
         Button button = (Button) findViewById(R.id.createCarpoolButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -135,12 +142,8 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 mProgressBar.setVisibility(View.VISIBLE);
                 String destination = mDestination.getText().toString();
                 String pickUpLocation = mPickUpLocation.getText().toString();
-               // int month = mPickUpDay.getMonth();
-                //int day = ;
-                int year;
-                int hour;
-                int min;
-                String pickUpTime = mPickUpTime.getText().toString();
+//                String MDY = mPickUpDay.getText().toString();
+                Date pickUpDate = new Date(year, month, day, hour, minute);
                 int seats = mSeats.getValue();
                 String notes = mNotes.getText().toString();
 
@@ -150,7 +153,7 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 }
                 newCarpool.put("destination", destination);
                 newCarpool.put("pickUpLocation", pickUpLocation);
-                newCarpool.put("pickUpTime", new Date());
+                newCarpool.put("pickUpTime", pickUpDate);
                 newCarpool.put("seatsAvailable", seats);
                 newCarpool.put("notes", notes);
                 newCarpool.put("pickupGeo", pickupGeo);
@@ -178,31 +181,41 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
 
     }
 
-//    private void setDateTimeField() {
-//        mPickUpDay.setOnClickListener(this);
-//        mPickUpTime.setOnClickListener(this);
-//
-//        Calendar newCalendar = Calendar.getInstance();
-//        datePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
-//
-//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                Calendar newDate = Calendar.getInstance();
-//                newDate.set(year, monthOfYear, dayOfMonth);
-//                mPickUpDay.setText(dateFormatter.format(newDate.getTime()));
-//            }
-//
-//        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-//
-//        timePickerDialog = new TimePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-//
-//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                Calendar newDate = Calendar.getInstance();
-//                newDate.set(year, monthOfYear, dayOfMonth);
-//                mPickUpTime.setText(dateFormatter.format(newDate.getTime()));
-//            }
-//
-//        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-//    }
+    private void setDateTimeField() {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int yr, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(yr, monthOfYear, dayOfMonth);
+                mPickUpDay.setText(dateFormatter.format(newDate.getTime()));
+                year = yr;
+                month = monthOfYear;
+                day = dayOfMonth;
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            public void onTimeSet(TimePicker view, int hr, int min) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(Calendar.HOUR, hr);
+                newDate.set(Calendar.MINUTE, min);
+                mPickUpTime.setText(timeFormatter.format(newDate.getTime()));
+                hour = hr;
+                minute = min;
+            }
+        },newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE), true);
+        mPickUpDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog.show();
+            }
+        });
+        mPickUpTime.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                timePickerDialog.show();
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -339,15 +352,5 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
         Toast.makeText(this, "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
                 Toast.LENGTH_SHORT).show();
     }
-
-
-//    @Override
-//    public void onClick(View view) {
-//        if(view == fromDateEtxt) {
-//            fromDatePickerDialog.show();
-//        } else if(view == toDateEtxt) {
-//            toDatePickerDialog.show();
-//        }
-//    }
 
 }
