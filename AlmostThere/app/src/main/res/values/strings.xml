@@ -29,6 +29,8 @@
     <string name="title_activity_sign_up">Sign Up</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_add_carpool">Create New Carpool</string>
+    <string name="title_activity_join_carpool">Join Carpool</string>
+
     <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;</string>
 
 </resources>
