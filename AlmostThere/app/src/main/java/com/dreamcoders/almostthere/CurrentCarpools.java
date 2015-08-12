@@ -2,21 +2,28 @@ package com.dreamcoders.almostthere;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 
 public class CurrentCarpools extends AppCompatActivity {
 
     protected Button mAddCarpool;
+    private ParseQueryAdapter<ParseObject> currentCarpoolAdapter;
+    private ListView carpoolList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,41 @@ public class CurrentCarpools extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        ParseQueryAdapter.QueryFactory<ParseObject> factory =
+                new ParseQueryAdapter.QueryFactory<ParseObject>() {
+                    public ParseQuery<ParseObject> create() {
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Carpool");
+                        query.whereEqualTo("driver", ParseUser.getCurrentUser());
+                        return query;
+                    }
+                };
+
+
+        currentCarpoolAdapter = new ParseQueryAdapter<ParseObject>(this, factory){
+            @Override
+            public View getItemView(ParseObject object, View view, ViewGroup parent) {
+                if(view == null){
+                    view = View.inflate(getContext(), R.layout.customer_row, null);
+                }
+                TextView bigContent = (TextView) view.findViewById(R.id.custom_row_large);
+                TextView medContent = (TextView) view.findViewById(R.id.custom_row_med);
+
+
+                bigContent.setText(object.getString("pickUpLocation"));
+                medContent.setText(object.getString("destination"));
+                return view;
+            }
+        };
+
+        currentCarpoolAdapter.setAutoload(false);
+        currentCarpoolAdapter.setPaginationEnabled(false);
+
+        carpoolList = (ListView) findViewById(R.id.carpoolList);
+        carpoolList.setAdapter(currentCarpoolAdapter);
+
+        currentCarpoolAdapter.loadObjects();
+
     }
 
     @Override
