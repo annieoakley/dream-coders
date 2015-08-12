@@ -28,6 +28,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:text="BACK TO CURRENT CARPOOLS"
+            android:textSize="16sp"
             android:id="@+id/button"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
 
