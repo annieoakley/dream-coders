@@ -1,32 +1,16 @@
 package com.dreamcoders.almostthere;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -34,13 +18,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.w3c.dom.Text;
-
-
-/**
- * Created by ginadomergue on 8/7/15.
- */
 public class JoinCarpool extends Activity implements View.OnClickListener {
 
     //carpoolID is currently hardcoded in. Will need to change this
@@ -57,7 +38,7 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
     private TextView seats;
     private TextView notes;
     private String objectID;
-//    private String testID = "ogT35JijfS";
+
     private String driverID;
     private int numSeats;
     private String carpoolObjectId;
@@ -81,22 +62,7 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
         final DateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:MM");
 
         objectID = getIntent().getExtras().getString("objectId");
-//        Bundle extras;
-//
-//        if (savedInstanceState == null)
-//        {
-//            //fetching extra data passed with intents in a Bundle type variable
-//
-//            extras = getIntent().getExtras();
-//
-//            if (extras == null)
-//            {
-//                objectID = null;
-//            } else{
-//              /* fetching the string passed with intent using ‘extras’*/
-//                objectID = extras.getString("objectId");
-//            }
-//        }
+
 
         final ParseQuery<ParseObject> carpoolQuery = ParseQuery.getQuery("Carpool");
         carpoolQuery.getInBackground(objectID, new GetCallback<ParseObject>() {

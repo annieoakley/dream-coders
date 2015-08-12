@@ -126,8 +126,6 @@ public class MapsActivity extends FragmentActivity implements
     private void doMapQuery(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Carpool");
         query.whereEqualTo("driver", ParseUser.getCurrentUser());
-        ParseGeoPoint current = new ParseGeoPoint(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-        query.whereWithinKilometers("pickupGeo", current, 2);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
