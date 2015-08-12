@@ -46,13 +46,12 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        Object g = ((CurrentCarpools) this.getGlobalVariable()).getSomeVariable();
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_carpool);
 
         joinCarpool = (Button) findViewById(R.id.JoinCarpool);
-//        driver = (TextView) findViewById(R.id.myDriver);
         destination = (TextView) findViewById(R.id.myDestination);
         pickupLocation = (TextView) findViewById(R.id.myLocation);
         pickupTime = (TextView) findViewById(R.id.myTime);
@@ -68,46 +67,25 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
         carpoolQuery.getInBackground(objectID, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-//                    // object will be your Carpool
+
                     carpoolObjectId = object.getObjectId();
                     driverID = object.getParseUser("driver").getObjectId();
                     userID = object.getParseUser("driver");
-//                    driverID = object.getParseUser("driver").getObjectId();
+
                     destination.setText(object.getString("destination"));
                     pickupLocation.setText(object.getString("pickUpLocation"));
-////                    pickupTime.DateObject.setText(object.getDate("pickUpTime"));
+
                     Date today = object.getDate("pickUpTime");
                     pickupTime.setText(df.format(today));
                     numSeats = object.getInt("seatsAvailable");
                     seats.setText(Integer.toString(numSeats));
                     notes.setText(object.getString("notes"));
-//                    driver.setText(object.getParseUser("driver").getObjectId());
-//                    driverID.getParseObject("User")
-//                            .fetchIfNeededInBackground(new GetCallback<ParseObject>() {
-//                                public void done(ParseObject user, ParseException e) {
-//                                    driver.setText(user.getString("username"));
-//                                    // Do something with your new title variable
-//                                }
-//                            });
-//
-                } else {
-//                    destination.setText("something went wrong");
-                    // something went wrong
+
                 }
             }
         });
 //
-//        final ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-//        userQuery.getInBackground(driverID, new GetCallback<ParseObject>() {
-//            public void done(ParseObject object, ParseException e) {
-//                if (e == null) {
-//                     driver.setText(object.getString("username"));
-//                }
-//                else {
-//                    // something went wrong
-//                }
-//            }
-//        });
+
 
 
         Button button = (Button) findViewById(R.id.JoinCarpool);
@@ -159,24 +137,10 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
                     });
                 }
 
-//
+
             }
         });
 
-//        final ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-////        String test = driverID.getUsername();
-//        userQuery.getInBackground(driverID, new GetCallback<ParseObject>() {
-//            public void done(ParseObject object, ParseException e) {
-//                if (e == null) {
-////                    // object will be your Carpool
-//                    driver.setText(object.getString("username"));
-////
-//                } else {
-//                    // something went wrong
-//
-//                }
-//            }
-//        });
 
     }
 
@@ -187,8 +151,7 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
     }
 
 
-    //
-//
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
