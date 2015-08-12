@@ -11,6 +11,14 @@
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
 
+    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:fillViewport="true">
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,16 +34,22 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:text="SWITCH TO MAP VIEW"
             android:id="@+id/button"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
 
         <ListView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/carpoolList" />
+            android:id="@+id/carpoolList"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="20dp"/>
 
     </LinearLayout>
+    </ScrollView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_carpool"
         android:layout_width="wrap_content"
@@ -45,4 +59,6 @@
         android:src="@drawable/ic_add_white_24dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true" />
+
+
 </RelativeLayout>

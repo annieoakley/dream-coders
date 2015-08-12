@@ -136,7 +136,7 @@ public class MapsActivity extends FragmentActivity implements
                         mMap.addMarker(new MarkerOptions().
                                 position(new LatLng(place.getParseGeoPoint("pickupGeo").getLatitude(),
                                         place.getParseGeoPoint("pickupGeo").getLongitude())).
-                                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).
+                                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).
                                 title(place.getString("pickUpLocation")));
                         place.getParseObject("toDestinationGeo").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
                             @Override

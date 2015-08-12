@@ -70,8 +70,8 @@ public class CurrentCarpools extends AppCompatActivity {
                 TextView medContent = (TextView) view.findViewById(R.id.custom_row_med);
 
 
-                bigContent.setText(object.getString("pickUpLocation"));
-                medContent.setText(object.getString("destination"));
+                bigContent.setText("To: " + object.getString("destination"));
+                medContent.setText("From: " +object.getString("pickUpLocation"));
                 return view;
             }
         };
