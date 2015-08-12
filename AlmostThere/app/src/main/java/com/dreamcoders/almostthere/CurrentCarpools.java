@@ -1,7 +1,6 @@
 package com.dreamcoders.almostthere;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +21,6 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class CurrentCarpools extends AppCompatActivity {
@@ -61,7 +59,7 @@ public class CurrentCarpools extends AppCompatActivity {
                 new ParseQueryAdapter.QueryFactory<ParseObject>() {
                     public ParseQuery<ParseObject> create() {
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Carpool");
-                        query.whereEqualTo("driver", ParseUser.getCurrentUser());
+                        query.whereNotEqualTo("driver", ParseUser.getCurrentUser());
                         return query;
                     }
                 };
@@ -105,17 +103,8 @@ public class CurrentCarpools extends AppCompatActivity {
                 startActivity(i);
 
 
-                // CursorAdapter returns a cursor at the correct position for getItem(), or null
-                // if it cannot seek to that position.
-//                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-//                if (cursor != null) {
-//                    String locationSetting = Utility.getPreferredLocation(getActivity());
-//                    ((Callback) getActivity())
-//                            .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-//                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-//                            ));
-//                }
-//                mPosition = position;
+
+
             }
         });
 
