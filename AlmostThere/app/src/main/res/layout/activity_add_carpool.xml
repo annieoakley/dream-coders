@@ -31,7 +31,8 @@
                 android:layout_height="match_parent"
                 android:text="Create Carpool"
                 android:layout_marginTop="16dp"
-                android:layout_below="@+id/editNotes" />
+                android:layout_below="@+id/editNotes"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"
