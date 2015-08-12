@@ -27,7 +27,7 @@ public class SplashScreen extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent i = new Intent("com.dreamcoders.almostthere.MainActivity");
+                    Intent i = new Intent("com.dreamcoders.almostthere.LogIn");
                     startActivity(i);
                 }
             }
