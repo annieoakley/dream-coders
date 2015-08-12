@@ -1,64 +1,65 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.dreamcoders.almostthere.LogIn">
-
-    <EditText
-        android:id="@+id/usernameText"
-        android:layout_width="match_parent"
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:hint="@string/userName"
-        android:ems="10"
-        android:inputType="textEmailAddress" >
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:minWidth="280dp"
+        android:background="#ddd"
+        android:elevation="2dp"
+        tools:context="com.dreamcoders.almostthere.LogIn">
+        <EditText
+            android:id="@+id/usernameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/userName"
+            android:ems="10"
+            android:inputType="textEmailAddress" >
+            <requestFocus />
+        </EditText>
+        <EditText
+            android:id="@+id/pwdText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            android:ems="10"
+            android:inputType="textPassword" />
 
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/pwdText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/usernameText"
-        android:hint="password"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/loginPageButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/logIn"
-        android:layout_below="@+id/pwdText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SIGN UP"
+                android:id="@+id/signUp_login"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:clickable="true"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+            <Button
+                android:id="@+id/loginPageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logIn"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+        </LinearLayout>
+    </LinearLayout>
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:visibility="invisible" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sign up"
-        android:id="@+id/signUp_login"
-        android:layout_below="@+id/loginPageButton"
-        android:layout_alignRight="@+id/loginPageButton"
-        android:layout_alignEnd="@+id/loginPageButton"
-        android:layout_marginRight="34dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginTop="45dp"
-        android:onClick="onClick"
-        android:clickable="true"/>
-
-</RelativeLayout>
+</FrameLayout>
