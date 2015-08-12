@@ -28,13 +28,16 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:text="BACK TO CURRENT CARPOOLS"
+            android:textSize="16sp"
             android:id="@+id/button"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/carpoolList" />
+            android:id="@+id/carpoolList"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="20dp"/>
 
     </LinearLayout>
     
