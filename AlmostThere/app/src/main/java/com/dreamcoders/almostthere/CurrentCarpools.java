@@ -76,10 +76,13 @@ public class CurrentCarpools extends AppCompatActivity {
                 TextView bigContent = (TextView) view.findViewById(R.id.custom_row_large);
                 TextView medContent = (TextView) view.findViewById(R.id.custom_row_med);
 
-
                 bigContent.setText(object.getString("pickUpLocation"));
                 medContent.setText(object.getString("destination"));
                 ObjectIdList.add(object.getObjectId());
+
+                bigContent.setText("To: " + object.getString("destination"));
+                medContent.setText("From: " +object.getString("pickUpLocation"));
+
                 return view;
             }
         };
@@ -148,12 +151,9 @@ public class CurrentCarpools extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    public Object getGlobalVariable() {
-//        return globalVariable;
-//    }
-//
-//    public void setGlobalVariable(Object g){
-//        this.globalVariable = g;
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentCarpoolAdapter.loadObjects();
+    }
 }
