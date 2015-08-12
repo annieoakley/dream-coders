@@ -14,6 +14,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
@@ -134,13 +135,17 @@ public class MapsActivity extends FragmentActivity implements
                 for(final ParseObject place : list){
                         mMap.addMarker(new MarkerOptions().
                                 position(new LatLng(place.getParseGeoPoint("pickupGeo").getLatitude(),
-                                        place.getParseGeoPoint("pickupGeo").getLongitude())).title(place.getString("pickUpLocation")));
+                                        place.getParseGeoPoint("pickupGeo").getLongitude())).
+                                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).
+                                title(place.getString("pickUpLocation")));
                         place.getParseObject("toDestinationGeo").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
                             @Override
                             public void done(ParseObject destination, ParseException e) {
                                 ParseGeoPoint destinationGeo = destination.getParseGeoPoint("destinationGeo");
                                 mMap.addMarker(new MarkerOptions().
-                                position(new LatLng(destinationGeo.getLatitude(), destinationGeo.getLongitude())).title(place.getString("destination")));
+                                position(new LatLng(destinationGeo.getLatitude(), destinationGeo.getLongitude())).
+                                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)).
+                                        title(place.getString("destination")));
                             }
                         });
 
