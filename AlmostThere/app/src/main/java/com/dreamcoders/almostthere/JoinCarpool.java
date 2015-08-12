@@ -56,7 +56,8 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
     private TextView pickupTime;
     private TextView seats;
     private TextView notes;
-    private String testID = "ogT35JijfS";
+    private String objectID;
+//    private String testID = "ogT35JijfS";
     private String driverID;
     private int numSeats;
     private String carpoolObjectId;
@@ -64,6 +65,8 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        Object g = ((CurrentCarpools) this.getGlobalVariable()).getSomeVariable();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_carpool);
 
@@ -77,10 +80,26 @@ public class JoinCarpool extends Activity implements View.OnClickListener {
 
         final DateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:MM");
 
-
+        objectID = getIntent().getExtras().getString("objectId");
+//        Bundle extras;
+//
+//        if (savedInstanceState == null)
+//        {
+//            //fetching extra data passed with intents in a Bundle type variable
+//
+//            extras = getIntent().getExtras();
+//
+//            if (extras == null)
+//            {
+//                objectID = null;
+//            } else{
+//              /* fetching the string passed with intent using ‘extras’*/
+//                objectID = extras.getString("objectId");
+//            }
+//        }
 
         final ParseQuery<ParseObject> carpoolQuery = ParseQuery.getQuery("Carpool");
-        carpoolQuery.getInBackground(testID, new GetCallback<ParseObject>() {
+        carpoolQuery.getInBackground(objectID, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
 //                    // object will be your Carpool

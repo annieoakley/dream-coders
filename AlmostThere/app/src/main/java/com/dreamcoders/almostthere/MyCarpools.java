@@ -36,7 +36,7 @@ public class MyCarpools extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MyCarpools.this, MapsActivity.class);
+                Intent i = new Intent(MyCarpools.this, CurrentCarpools.class);
                 startActivity(i);
             }
         });
