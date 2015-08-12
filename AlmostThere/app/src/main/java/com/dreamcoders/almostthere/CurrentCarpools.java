@@ -60,10 +60,6 @@ public class CurrentCarpools extends AppCompatActivity {
                     public ParseQuery<ParseObject> create() {
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Carpool");
                         query.whereNotEqualTo("driver", ParseUser.getCurrentUser());
-<<<<<<< HEAD
-=======
-                        
->>>>>>> 6ef79813905a5ea615f769a62990a6080ee09a4b
                         return query;
                     }
                 };
