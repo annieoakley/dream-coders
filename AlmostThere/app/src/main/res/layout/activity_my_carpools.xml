@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
-
-
+    
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -26,6 +25,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:text="BACK TO CURRENT CARPOOLS"
             android:id="@+id/button"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
@@ -36,6 +37,7 @@
             android:id="@+id/carpoolList" />
 
     </LinearLayout>
+    
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_carpool"
         android:layout_width="wrap_content"
