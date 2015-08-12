@@ -21,7 +21,6 @@ import com.parse.ParseUser;
 
 public class CurrentCarpools extends AppCompatActivity {
 
-    protected Button mAddCarpool;
     private ParseQueryAdapter<ParseObject> currentCarpoolAdapter;
     private ListView carpoolList;
 
@@ -42,7 +41,7 @@ public class CurrentCarpools extends AppCompatActivity {
             }
         });
 
-        mAddCarpool = (Button) findViewById(R.id.add_carpool);
+        View mAddCarpool = findViewById(R.id.add_carpool);
         mAddCarpool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
