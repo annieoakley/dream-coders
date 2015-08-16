@@ -153,7 +153,8 @@
                 android:gravity="center_horizontal"
                 android:layout_below="@+id/seatsView"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                />
 
         </RelativeLayout>
 

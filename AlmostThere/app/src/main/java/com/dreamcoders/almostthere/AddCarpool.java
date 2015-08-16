@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -157,6 +158,9 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 newCarpool.put("notes", notes);
                 newCarpool.put("pickupGeo", pickupGeo);
                 newCarpool.put("toDestinationGeo", toDestinationGeo);
+                ParseRelation<ParseObject> relation = newCarpool.getRelation("passengers");
+                relation.add(mCurrentUser);
+
                 newCarpool.saveInBackground(new SaveCallback() {
 
                     public void done(ParseException e) {
