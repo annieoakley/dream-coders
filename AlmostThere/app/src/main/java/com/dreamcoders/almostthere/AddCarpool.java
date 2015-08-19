@@ -5,7 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
 import android.text.Spanned;
@@ -44,7 +44,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class AddCarpool extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     protected ParseUser mCurrentUser;
     protected AutoCompleteTextView mDestination;
@@ -156,7 +156,9 @@ public class AddCarpool extends ActionBarActivity implements GoogleApiClient.OnC
                 newCarpool.put("pickUpTime", pickUpDate);
                 newCarpool.put("seatsAvailable", seats);
                 newCarpool.put("notes", notes);
-                newCarpool.put("pickupGeo", pickupGeo);
+                if(pickupGeo != null) {
+                    newCarpool.put("pickupGeo", pickupGeo);
+                }
                 newCarpool.put("toDestinationGeo", toDestinationGeo);
                 ParseRelation<ParseObject> relation = newCarpool.getRelation("passengers");
                 relation.add(mCurrentUser);
