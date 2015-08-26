@@ -159,7 +159,9 @@ public class AddCarpool extends AppCompatActivity implements GoogleApiClient.OnC
                 if(pickupGeo != null) {
                     newCarpool.put("pickupGeo", pickupGeo);
                 }
-                newCarpool.put("toDestinationGeo", toDestinationGeo);
+                if(toDestinationGeo != null) {
+                    newCarpool.put("toDestinationGeo", toDestinationGeo);
+                }
                 ParseRelation<ParseObject> relation = newCarpool.getRelation("passengers");
                 relation.add(mCurrentUser);
 

@@ -19,7 +19,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +31,7 @@ public class CurrentCarpools extends AppCompatActivity {
     private ParseQueryAdapter<ParseObject> currentCarpoolAdapter;
     private ListView carpoolList;
     private List<String> ObjectIdList = new ArrayList<String>();
+    final DateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:MM");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +75,37 @@ public class CurrentCarpools extends AppCompatActivity {
                 if(view == null){
                     view = View.inflate(getContext(), R.layout.customer_row, null);
                 }
+                Date today = object.getDate("pickUpTime");
+                int numSeats = object.getInt("seatsAvailable");
+
                 TextView bigContent = (TextView) view.findViewById(R.id.custom_row_large);
                 TextView medContent = (TextView) view.findViewById(R.id.custom_row_med);
 
-                bigContent.setText(object.getString("pickUpLocation"));
-                medContent.setText(object.getString("destination"));
-                ObjectIdList.add(object.getObjectId());
+                boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+                if(tabletSize) {
 
-                bigContent.setText("To: " + object.getString("destination"));
-                medContent.setText("From: " +object.getString("pickUpLocation"));
+                    TextView bigContent2 = (TextView) view.findViewById(R.id.custom_row_large2);
+                    TextView medContent2 = (TextView) view.findViewById(R.id.custom_row_med2);
+
+                    ObjectIdList.add(object.getObjectId());
+
+                    bigContent.setText("To: " + object.getString("destination"));
+                    medContent.setText("From: " + object.getString("pickUpLocation"));
+                    bigContent2.setText("Pick up on: " + df.format(today));
+                    if (numSeats > 1) {
+                        medContent2.setText(Integer.toString(numSeats) + " seats available");
+                    } else {
+                        medContent2.setText(Integer.toString(numSeats) + " seat available");
+                    }
+                } else {
+                    ObjectIdList.add(object.getObjectId());
+
+                    bigContent.setText("To: " + object.getString("destination"));
+                    medContent.setText("From: " + object.getString("pickUpLocation"));
+                }
 
                 return view;
+
             }
         };
 

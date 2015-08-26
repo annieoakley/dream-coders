@@ -52,7 +52,8 @@ public class LogIn extends Activity {
                                 mProgressBar.setVisibility(View.INVISIBLE);
                                 if (user != null ) {
                                     if(user.getBoolean("emailVerified")){
-                                        // Hooray! The user is logged in.
+                                        // Hooray! The user is logged in. Get session token for future app relaunches.
+                                        String sessionToken = user.getSessionToken();
                                         startActivity(new Intent(
                                                 LogIn.this,
                                                 CurrentCarpools.class));
